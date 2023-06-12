@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name><![CDATA[Count total products in Order]]></name>
+  <code><![CDATA[prai_count_total_products_in_order]]></code>
+	<version><![CDATA[1.0]]></version>
+	<author><![CDATA[REDS PRAI]]></author>
+	<link><![CDATA[https://www.agenciaprai.com/]]></link>
+		
+	<file path="catalog/controller/account/order.php" error="skip">
+		<operation>
+			<search><![CDATA[$data['products'][] = array(]]></search>
+			<add position="before"><![CDATA[
+			//Total products
+			$totalProducts = 0;
+			foreach ($products as $product) {
+				$totalProducts += $product['quantity'];
+			}
+			
+			$data['total_products'] = $totalProducts;
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/account/order_info.twig" error="skip">
+		<operation>
+			<search><![CDATA[{% for total in totals %}]]></search>
+			<add position="before"><![CDATA[
+			<tr>
+				<td colspan="3"></td>
+				<td class="text-right"><b>Total de produtos</b></td>
+				<td class="text-right">{{ total_products }}</td>
+			</tr>
+			]]></add>
+		</operation>
+	</file>
+
+	<file path="admin/controller/sale/order.php" error="skip">
+		<operation>
+			<search><![CDATA[$data['products'][] = array(]]></search>
+			<add position="before"><![CDATA[
+			//Total products
+			$totalProducts = 0;
+			foreach ($products as $product) {
+				$totalProducts += $product['quantity'];
+			}
+			
+			$data['total_products'] = $totalProducts;
+			]]></add>
+		</operation>
+	</file>
+	<file path="admin/view/template/sale/order_info.twig" error="skip">
+		<operation>
+			<search><![CDATA[{% for total in totals %}]]></search>
+			<add position="before"><![CDATA[
+			<tr>
+				<td colspan="3"></td>
+				<td class="text-right">Total de produtos</td>
+				<td class="text-right">{{ total_products }}</td>
+			</tr>
+			]]></add>
+		</operation>
+	</file>
+
+</modification>
